@@ -33,7 +33,7 @@ function CreateGroup()
   }
 
   return (
-    <div className="m-10 p-10 w-full  rounded-3xl">
+    <div className="common-container">
       <div className="m-2 p-4 text-3xl flex flex-row">
         <img
         src="/assets/group.png"

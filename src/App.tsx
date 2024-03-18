@@ -37,7 +37,7 @@ function App() {
               <Route element={<AdminLayout/>}>
                   <Route index path="/home" element={<Home/>}/>
                   <Route path="/groups" element={<Group/>}/>
-                  <Route path="/view-groups" element={<ViewGroup/>}/>
+                  <Route path="/view-group" element={<ViewGroup/>}/>
                   <Route path="/create-group" element={<CreateGroup/>}/>
                   <Route path="/edit-group" element={<EditGroups/>}/>
 
