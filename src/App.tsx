@@ -1,6 +1,6 @@
 import './index.css'
 import AddCounsellors from './_root/admin pages/AddCounsellors'
-import { Route, Router, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 //private
 import RootLayout from './_root/RootLayout'
@@ -21,6 +21,9 @@ import Home from './_root/Home'
 import EditGroups from './_root/admin pages/EditGroups'
 import EditCounsellor from './_root/admin pages/EditCounsellor'
 import EditBuddy from './_root/admin pages/EditBuddy'
+import AuthLayout from './_auth/AuthLayout'
+import LoginForm from './_auth/forms/LoginForm'
+import RegisterForm from './_auth/forms/RegisterForm'
 
 function App() {
 
@@ -28,14 +31,15 @@ function App() {
     <main className='flex h-screen'>
         <Routes>
           {/*public routes*/}
-          <Route>
-            
+          <Route element={<AuthLayout/>}>
+            <Route path='/login' element={<LoginForm/>}/>
+            <Route path='/register' element={<RegisterForm/>}/>
           </Route>
 
           {/*private routes*/}
           <Route element={<RootLayout/>}>
               <Route element={<AdminLayout/>}>
-                  <Route index path="/home" element={<Home/>}/>
+                  <Route index path="/" element={<Home/>}/>
                   <Route path="/groups" element={<Group/>}/>
                   <Route path="/view-group" element={<ViewGroup/>}/>
                   <Route path="/create-group" element={<CreateGroup/>}/>

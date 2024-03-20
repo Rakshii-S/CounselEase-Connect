@@ -17,28 +17,13 @@ function LeftBar()
         <div className='flex flex-col gap-11'>
             <Link to="/" className='flex gap-3 items-center'>
                 <img 
-                    src="/assets/mind.png"
+                    src="/assets/mainlogo.png"
                     alt="logo"
                     width={60}
                     height={36}
                 />
                 <p className="text-xl">CounselEase Connect</p>
             </Link>
-            <Link to="" className='flex gap-3 items-center'>
-                <img 
-                src='https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1710547200&semt=ais'
-                alt="profile"
-                className='h-14 w-14 rounded-full'
-                />
-                <div className='flex flex-col'>
-                    <p className='body-bold'>
-                        demo name
-                    </p>
-                    <p className='small-regular text-light-3'>
-                        @demooo
-                    </p>
-                </div>
-                </Link>
                 <ul className='flex flex-col gap-6'>
                {sidebarLinksAdmin .map((link:INavLink) =>{
                 const isActive = pathname === link.route;
@@ -46,7 +31,7 @@ function LeftBar()
                     <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>
                         <NavLink
                         to={link.route}
-                        className="flex gap-4 items-center p-4">
+                        className="flex gap-4 items-center p-1">
                             <img 
                             src={link.imgURL}
                             alt={link.label}
@@ -59,13 +44,14 @@ function LeftBar()
                })}
             </ul>
         </div>
-        <Link to="" className='flex ml-4 gap-3 items-center'>
+        <Link to="" className='flex ml-4 mt-8 items-center'>
                 <img 
-                src='assets/exit.png'
+                src='assets/logout.png'
                 alt="profile"
-                width={25}
+                width={38}
+                className={`invert-white`}
                 />
-                <p>Logout</p>
+                <p className="ml-3 text-bold">Logout</p>
         </Link>
         </nav>
   )

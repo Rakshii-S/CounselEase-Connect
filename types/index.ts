@@ -39,8 +39,8 @@ export type IUpdatePost = {
 };
 
 export type IUser = {
-    $id: any;
     id: string;
+    role: string;
     name: string;
     username: string;
     email: string;

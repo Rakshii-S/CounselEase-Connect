@@ -16,17 +16,32 @@ const navigate = useNavigate();
         <div className='flex-between py-4 px-5'>
             <Link to="/" className='flex gap-3 items-center'>
             <img 
-                    src="/assets/mind.png"
+                    src="/assets/mainlogo.png"
                     alt="logo"
                     width={50}
                 />
             </Link>
             <div className='flex gap-4'>
+            <Button variant="ghost" className='shad-button_ghost'>
+                    <img 
+                    src="/assets/email.png" 
+                    width={37}
+                    alt="inbox"
+                    className={`invert-white`}/>
+                </Button>
+            <Button variant="ghost" className='shad-button_ghost'>
+                    <img 
+                    src="/assets/notification.png" 
+                    width={37}
+                    alt="notification"
+                    className={`invert-white`}/>
+                </Button>
                 <Button variant="ghost" className='shad-button_ghost'>
                     <img 
-                    src="/assets/exit.png" 
+                    src="/assets/logout.png" 
                     width={30}
-                    alt="logout"/>
+                    alt="logout"
+                    className={`invert-white`}/>
                 </Button>
                 <Link to="" className='flex-center gap-3'>
                     <img 

@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-gray-800 text-white min-h-screen font-inter;
+    @apply bg-dark-1 text-white min-h-screen font-inter;
   }
 }
 
@@ -189,7 +189,7 @@
 
   /* Bottom bar */
   .bottom-bar {
-    @apply z-50 flex-between w-full sticky bottom-0 rounded-t-[20px] bg-slate-900 px-5 py-4 md:hidden;
+    @apply z-50 flex-between w-full sticky bottom-0 rounded-t-[20px] bg-dark-2 px-5 py-4 md:hidden;
   }
 
   /* File uploader */
@@ -220,7 +220,11 @@
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-slate-900;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+  }
+
+  .rightsidebar {
+    @apply hidden md:flex px-6 py-10 flex-col justify-end min-w-[270px] bg-dark-2;
   }
 
   .leftsidebar-link {
@@ -238,7 +242,7 @@
 
   /* Topbar */
   .topbar {
-    @apply sticky top-0 z-50 md:hidden bg-slate-900 w-full;
+    @apply sticky top-0 z-50 md:hidden bg-dark-2 w-full;
   }
 
   /* User card */

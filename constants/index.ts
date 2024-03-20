@@ -1,7 +1,7 @@
 export const sidebarLinksAdmin = [
     {
         imgURL: "/assets/home.png",
-        route: "/home",
+        route: "/",
         label: "Home",
     },
     {
@@ -20,7 +20,7 @@ export const sidebarLinksAdmin = [
         label: "Group",
     },
     {
-        imgURL: "/assets/add-post.png",
+        imgURL: "/assets/create.png",
         route: "/posts",
         label: "Create Post",
     },
@@ -29,7 +29,7 @@ export const sidebarLinksAdmin = [
 export const AdminbottombarLinks = [
     {
         imgURL: "/assets/home.png",
-        route: "/home",
+        route: "/",
         label: "Home",
     },
     {
@@ -48,7 +48,7 @@ export const AdminbottombarLinks = [
         label: "Group",
     },
     {
-        imgURL: "/assets/add-post.png",
+        imgURL: "/assets/create.png",
         route: "/posts",
         label: "Create Post",
     },
