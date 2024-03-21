@@ -3,7 +3,7 @@ function Loader() {
   return (
     <div>
     <img
-    src="/assets/icons/loader.svg"
+    src="/assets/loader.svg"
     alt="loading"
     className='bg-black'
     />

@@ -38,14 +38,14 @@ function FileUploader({fieldChange, mediaUrl}:FileUploaderProps) {
         ):(
           <div className='file_uploader-box'>
             <img 
-            src="/assets/drag.png"
+            src="/assets/gallery.png"
             width={96}
             height={77}
             alt="file-upload"
             />
             <h3 className='base-medium text-light-2 mb-2 mt-6'>Drag photo here</h3>
             <p className='text-light-4 small-regular mb-6'>SVG, PHG, JPEG</p>
-            <Button className="bg-slate-800 p-4 rounded-xl">
+            <Button className="bg-slate-800 pl-4 pr-4 pb-2 rounded-xl">
               Select from computer
             </Button>
           </div>

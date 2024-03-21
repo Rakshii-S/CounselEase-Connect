@@ -23,8 +23,8 @@ export type IUpdateUser = {
 export type INewPost = {
     userId: string;
     caption: string;
+    email: string;
     file: File[];
-    location?: string;
     tags?: string;
 };
 
@@ -39,6 +39,7 @@ export type IUpdatePost = {
 };
 
 export type IUser = {
+    $id: any;
     id: string;
     role: string;
     name: string;
@@ -55,3 +56,24 @@ export type INewUser = {
     username: string;
     password: string;
 };
+
+//GROUPS SECTION
+export type INewGroup = {
+    userId: string;
+    counsellorId: string;
+    buddyId: string;
+    name: string;
+    file: File[];
+    bio?: string;
+};
+
+export type IUpdateGroup = {
+    groupId: string;
+    imageUrl: any;
+    imageId: any;
+    counsellorId: string;
+    buddyId: string;
+    name: string;
+    file: File[];
+    bio?: string;
+}

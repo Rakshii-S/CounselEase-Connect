@@ -12,11 +12,10 @@ import CreateGroup from './_root/admin pages/CreateGroup'
 import ViewGroup from './_root/admin pages/ViewGroup'
 import ViewCounsellor from './_root/admin pages/ViewCounsellor'
 import ViewBuddy from './_root/admin pages/ViewBuddy'
-import CreatePost from './_root/admin pages/CreatePost'
 import Group from './_root/admin pages/Group'
 import Counsellor from './_root/admin pages/Counsellor'
 import Buddy from './_root/admin pages/Buddy'
-import Post from './_root/admin pages/Post'
+import CreatePost from './_root/admin pages/CreatePost'
 import Home from './_root/Home'
 import EditGroups from './_root/admin pages/EditGroups'
 import EditCounsellor from './_root/admin pages/EditCounsellor'
@@ -24,6 +23,8 @@ import EditBuddy from './_root/admin pages/EditBuddy'
 import AuthLayout from './_auth/AuthLayout'
 import LoginForm from './_auth/forms/LoginForm'
 import RegisterForm from './_auth/forms/RegisterForm'
+import EditPost from './_root/admin pages/EditPost'
+import PostDetails from './_root/admin pages/PostDetails'
 
 function App() {
 
@@ -55,8 +56,11 @@ function App() {
                   <Route path="/add-buddy" element={<AddBuddy/>}/>
                   <Route path="/edit-buddy" element={<EditBuddy/>}/>
 
-                  <Route path="/posts" element={<Post/>}/>
                   <Route path="/create-post" element={<CreatePost/>}/>
+                  <Route path="/edit-post/:id" element={<EditPost/>}/>
+                  <Route path="/post/:id" element={<PostDetails/>}/>
+
+                  
                 </Route>
           </Route>
         </Routes>

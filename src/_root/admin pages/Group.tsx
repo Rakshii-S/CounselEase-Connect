@@ -1,4 +1,3 @@
-
 import { Button } from '../../../@/components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -11,13 +10,13 @@ function Group() {
       <p>Create a group</p>
       <Link to="/create-group">
         <img
-        src="/assets/group.png"
-        width={70}
+        src="/assets/plus.png"
+        width={60}
         className='mt-[-15px]'
         />
       </Link>
     </div>
-    <div className='bg-gray-900 m-10 w-full h-44 rounded-3xl flex flex-row justify-between'>
+    <div className='bg-gray-900 m-5 w-full h-44 rounded-3xl flex flex-row justify-between'>
         <div className='p-8 text-xl flex flex-row'>
             <img
                 src="https://i.pinimg.com/474x/60/b1/e4/60b1e4f0d521cfd16e4de3e59a263470.jpg"

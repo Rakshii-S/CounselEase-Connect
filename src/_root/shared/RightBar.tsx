@@ -7,17 +7,13 @@ import { useUserContext } from "../../../context/AuthContext.tsx";
 function RightBar() 
 {
     //constants
-    const {pathname} = useLocation();
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
     //tanstack query, appwrite and context
-    const {mutate: signOut, isSuccess} = useSignOutAccout();
+    // const {mutate: signOut, isSuccess} = useSignOutAccout();
     const {user} = useUserContext();
 
-    useEffect(()=>{
-        if(isSuccess) navigate(0);
-    },[isSuccess])
     return (
     <div>
         {open?(
@@ -30,18 +26,18 @@ function RightBar()
                      width={40}
                      className={`invert-white`}/>
                 </Button>
-                <Link to="" className='flex gap-3 items-center'>
+                <Link to={`/profile/${user.$id}`} className='flex gap-3 items-center'>
                     <img 
-                    src={`https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1710547200&semt=ais`}
+                    src={user.imageUrl || `https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1710547200&semt=ais`}
                     alt="profile"
                     className='h-14 w-14 rounded-full'
                     />
                     <div className='flex flex-col'>
                         <p className='body-bold'>
-                            demo name
+                            {user.name}
                         </p>
                         <p className='small-regular text-light-3'>
-                            @demooo
+                           {user.username}
                         </p>
                     </div>
                     </Link>
@@ -79,14 +75,14 @@ function RightBar()
                                 alt=""
                                 width={37}
                                 className={`invert-white`}/>
-                                Edit profile
+                                <p>Edit profile</p>
                             </Button>
                         </li>
                 </ul>
             </div>
             </nav>
         ):(
-            <Button onClick={()=>setOpen(true)}>
+            <Button onClick={()=>setOpen(true)} className="hidden md:flex px-6 py-10 flex-col">
                 <div className="m-5">
                 <img 
                      src="/assets/menu.png"

@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom"
 import {sidebarLinksAdmin} from '../../../constants/index.ts'
 import {INavLink} from '../../../types/index.ts'
+import { useSignOutAccout } from "../../../@/lib/react_query/queryNmutation.tsx";
 function LeftBar() 
 {
     const {pathname} = useLocation();
-    // const {mutate: signOut, isSuccess} = useSignOutAccout();
+    const {mutate: signOut, isSuccess} = useSignOutAccout();
     const navigate = useNavigate();
-    // const {user} = useUserContext();
 
-    // useEffect(()=>{
-    //     if(isSuccess) navigate(0);
-    // },[isSuccess])
+    useEffect(()=>{
+        if(isSuccess) navigate(0);
+    },[isSuccess])
     return (
     <nav className='leftsidebar'>
         <div className='flex flex-col gap-11'>
@@ -44,7 +44,7 @@ function LeftBar()
                })}
             </ul>
         </div>
-        <Link to="" className='flex ml-4 mt-8 items-center'>
+        <Link to="" className='flex ml-4 mt-8 items-center' onClick={()=>signOut()}>
                 <img 
                 src='assets/logout.png'
                 alt="profile"

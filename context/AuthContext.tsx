@@ -37,6 +37,7 @@ const AuthProvider = ({children}:{children: React.ReactNode}) => {
 
         if(currentAccount){
             setUser({
+                $id:'',
                 id:currentAccount.$id,
                 role:currentAccount.role,
                 name: currentAccount.name,
@@ -60,7 +61,7 @@ const AuthProvider = ({children}:{children: React.ReactNode}) => {
 
     useEffect(() => {
         //localStorage.getItem('cookieFallback') === null) 
-        if(localStorage.getItem('cookieFallback') === '[]')navigate('/sign-in')
+        if(localStorage.getItem('cookieFallback') === '[]')navigate('/login')
         checkAuthUser();
     },[])
     const value = {

@@ -21,7 +21,7 @@ export const sidebarLinksAdmin = [
     },
     {
         imgURL: "/assets/create.png",
-        route: "/posts",
+        route: "/create-post",
         label: "Create Post",
     },
 ];
