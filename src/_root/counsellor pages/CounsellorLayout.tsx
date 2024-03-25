@@ -5,12 +5,11 @@ import RightBar from "../shared/RightBar"
 import BottomBar from "../shared/BottomBar"
 import { useUserContext } from "../../../context/AuthContext"
 
-function AdminLayout() {
+function CounsellorLayout() {
   const {user} = useUserContext()
   console.log(user.role);
   return (
     <>
-      {user.role == "admin" ?(
       <div className="w-full md:flex">
         <TopBar/>
         <LeftBar/>
@@ -20,11 +19,8 @@ function AdminLayout() {
         <RightBar/>
         <BottomBar/>
       </div>
-    ):(
-          <></>
-    )}
     </>
   )
 }
 
-export default AdminLayout
+export default CounsellorLayout

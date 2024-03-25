@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom"
-import {sidebarLinksAdmin} from '../../../constants/index.ts'
+import {sidebarLinksAdmin, sidebarLinksBuddy, sidebarLinksCounsellor, sidebarLinksStudent} from '../../../constants/index.ts'
 import {INavLink} from '../../../types/index.ts'
 import { useSignOutAccout } from "../../../@/lib/react_query/queryNmutation.tsx";
+import { useUserContext } from "../../../context/AuthContext.tsx";
 function LeftBar() 
 {
     const {pathname} = useLocation();
+    const {user} = useUserContext();
     const {mutate: signOut, isSuccess} = useSignOutAccout();
     const navigate = useNavigate();
 
@@ -25,7 +27,58 @@ function LeftBar()
                 <p className="text-xl">CounselEase Connect</p>
             </Link>
                 <ul className='flex flex-col gap-6'>
-               {sidebarLinksAdmin .map((link:INavLink) =>{
+               {user.role == "admin" && sidebarLinksAdmin .map((link:INavLink) =>{
+                const isActive = pathname === link.route;
+                return (
+                    <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>
+                        <NavLink
+                        to={link.route}
+                        className="flex gap-4 items-center p-1">
+                            <img 
+                            src={link.imgURL}
+                            alt={link.label}
+                            width={40}
+                            className={`invert-white $ {isActive && 'invert-white'}`}/>
+                            {link.label}
+                        </NavLink>
+                    </li>
+                )
+               })}
+               {user.role == "counsellor" && sidebarLinksCounsellor .map((link:INavLink) =>{
+                const isActive = pathname === link.route;
+                return (
+                    <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>
+                        <NavLink
+                        to={link.route}
+                        className="flex gap-4 items-center p-1">
+                            <img 
+                            src={link.imgURL}
+                            alt={link.label}
+                            width={40}
+                            className={`invert-white $ {isActive && 'invert-white'}`}/>
+                            {link.label}
+                        </NavLink>
+                    </li>
+                )
+               })}
+               {user.role == "student" && sidebarLinksStudent .map((link:INavLink) =>{
+                const isActive = pathname === link.route;
+                return (
+                    <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>
+                        <NavLink
+                        to={link.route}
+                        className="flex gap-4 items-center p-1">
+                            <img 
+                            src={link.imgURL}
+                            alt={link.label}
+                            width={40}
+                            className={`invert-white $ {isActive && 'invert-white'}`}/>
+                            {link.label}
+                        </NavLink>
+                    </li>
+                )
+               })}
+               {user.role == "buddy" && sidebarLinksBuddy .map((link:INavLink) =>{
                 const isActive = pathname === link.route;
                 return (
                     <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>

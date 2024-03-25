@@ -39,6 +39,7 @@ function Profile() {
             </div>
         </div>   
         <div className='flex lg:flex-row justify-between flex-col'>
+            <Button onClick={()=>navigate("/edit-profile")} className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-56 h-18 lg:hidden md:hidden visible">Edit profile</Button>
             <Button onClick={()=>navigate("/")} className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-56 h-18">Go Back</Button>
         </div>
     </div>

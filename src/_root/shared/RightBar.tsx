@@ -66,6 +66,22 @@ function RightBar()
                                 Notification
                             </NavLink>
                         </li>
+                        {user.role == "student"?(
+                            <li className={`leftsidebar-link group`}>
+                            <Button
+                            onClick={()=>navigate('/edit-profile')}
+                            className="flex gap-4 items-center p-1">
+                                <img 
+                                src="/assets/activity.png"
+                                alt=""
+                                width={40}
+                                className={`invert-white`}/>
+                                <p>Activities</p>
+                            </Button>
+                        </li>
+                        ):(
+                            <></>
+                        )}
                         <li className={`leftsidebar-link group`}>
                             <Button
                             onClick={()=>navigate('/edit-profile')}

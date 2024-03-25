@@ -36,7 +36,8 @@ function PostCard({post}:PostCardProps)
                     </div>
                 </div>
             </div>
-            <Link  to={`/edit-post/${post.$id}`} className={`${user.$id === post.creator.$id && "hidden"}`}>
+            {user.role == "admin" ?(
+                <Link  to={`/edit-post/${post.$id}`} className={`${user.$id === post.creator.$id && "hidden"}`}>
                 <img 
                 src="/assets/edit.png"
                 alt="edit"
@@ -44,6 +45,9 @@ function PostCard({post}:PostCardProps)
                 height={20}
                 />
             </Link>
+            ):(
+                <></>
+            )}
         </div>
         <Link to={`/post/${post.$id}`}>
             <div className="small-medium lg:base-medium py-5">

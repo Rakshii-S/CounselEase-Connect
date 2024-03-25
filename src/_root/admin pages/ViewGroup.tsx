@@ -10,7 +10,7 @@ import { Models } from "appwrite";
 
 function ViewGroup() {
   const navigate = useNavigate();
-
+  const {user} = useUserContext();
   const {id} = useParams()
     const {data: group, isPending} = useGetGroupById(id || '');
     
@@ -22,24 +22,28 @@ function ViewGroup() {
     return (
       <div className="post_details-container">
         {isPending?<Loader/>:(
-          <div className="bg-dark-2 w-full max-w-5xl rounded-[30px] flex-col flex xl:flex-row border border-dark-4 xl:rounded-l-[24px]">
+          <div className="bg-dark-2 w-full max-w-5xl rounded-[30px] flex-col flex border border-dark-4 xl:rounded-l-[24px]">
               <div className="m-10">
-                <div className="flex flex-row mb-10 justify-between">
-                    <div onClick={deleteGroup}>
-                      <img
-                      src="/assets/trash.png"
-                      alt=""
-                      width={30}
-                      />
-                    </div>
-                    <div onClick={()=>navigate(`/edit-group/${id}`)}>
-                      <img
-                      src="/assets/edit.png"
-                      alt=""
-                      width={25}
-                      />
-                    </div>
-                </div>
+                {user.role == "admin"?(
+                  <div className="flex flex-row mb-10 justify-between">
+                  <div onClick={deleteGroup}>
+                    <img
+                    src="/assets/trash.png"
+                    alt=""
+                    width={30}
+                    />
+                  </div>
+                  <div onClick={()=>navigate(`/edit-group/${id}`)}>
+                    <img
+                    src="/assets/edit.png"
+                    alt=""
+                    width={25}
+                    />
+                  </div>
+              </div>
+                ):(
+                  <Button className="m-10 h-16 w-24 p-4 rounded-xl bg-sky-800 hover:bg-slate-800">Join</Button>
+                )}
                 
                 <div className="flex flex-col justify-center">
                     <div className="mb-8 h-10 text-center text-2xl ">

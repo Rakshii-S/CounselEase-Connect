@@ -24,6 +24,17 @@ useEffect(()=>{
                 />
             </Link>
             <div className='flex gap-4'>
+                {user.role=="student" ?(
+                    <Button variant="ghost" className='shad-button_ghost'>
+                    <img 
+                    src="/assets/activity.png" 
+                    width={37}
+                    alt="activity"
+                    className={`invert-white`}/>
+                </Button>
+                ):(
+                    <></>
+                )}
             <Button variant="ghost" className='shad-button_ghost'>
                     <img 
                     src="/assets/email.png" 

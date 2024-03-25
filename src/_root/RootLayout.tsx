@@ -1,18 +1,25 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useUserContext } from "../../context/AuthContext"
+import CounsellorLayout from "./counsellor pages/CounsellorLayout";
+import AdminLayout from "./admin pages/AdminLayout";
 
 function RootLayout() {
   const {user} = useUserContext()
-  return (
-    <>
-      {user.email == ""?
-      (
-        <Navigate to="/login"/>
-      ):(
-        <Outlet/>
-      )}
-    </>
-  )
+  if (user.email === "") 
+  {
+    return <Navigate to="/login" />;
+  } 
+  else if (user.role === "admin") 
+  {
+    return <AdminLayout />;
+  } 
+  else if (user.role === "student") 
+  {
+    return <CounsellorLayout />;
+  }
+  else{
+    
+  }
 }
 
 export default RootLayout

@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useGetRecentCounsellorC, useGetRecentCounsellorU } from '../../../@/lib/react_query/queryNmutation';
 import Loader from '../shared/Loader';
 import { Models } from 'appwrite';
+import { useUserContext } from '../../../context/AuthContext';
 
 function Counsellor() {
   //constants
+  const {user} = useUserContext();
   const navigate = useNavigate();
 
   //tanstack query and appwrite 
@@ -15,7 +17,8 @@ function Counsellor() {
   return (
     <>
     <div className="common-container">
-        <div className='bg-gray-900 w-full h-24 text-2xl rounded-2xl p-8 pl-10 pr-10 flex flex-row justify-between'>
+      {user.role == "admin"?(
+          <div className='bg-gray-900 w-full h-24 text-2xl rounded-2xl p-8 pl-10 pr-10 flex flex-row justify-between'>
           <p>Add new Counsellor</p>
           <Link to="/add-counsellor">
             <img
@@ -24,6 +27,11 @@ function Counsellor() {
             />
           </Link>
         </div>
+      ):(
+        <div className='h3-bold md:h2-bold text-left w-full'>
+          <p>Counsellor profiles</p>
+        </div>
+      )}
         {isUserLoading1 && isUserLoading2 && !usersU && !usersC?(
               <Loader/>
             ):(<ul>
