@@ -10,7 +10,7 @@ export const INITIAL_USER = {
     username:'',
     email:'',
     imageUrl:'',
-    bio:''
+    bio:'',
 }
 
 const INITIAL_STATE = {
@@ -60,10 +60,17 @@ const AuthProvider = ({children}:{children: React.ReactNode}) => {
     }
 
     useEffect(() => {
-        //localStorage.getItem('cookieFallback') === null) 
-        if(localStorage.getItem('cookieFallback') === '[]')navigate('/login')
+        const cookieFallback = localStorage.getItem("cookieFallback");
+        if (
+          cookieFallback === "[]" ||
+          cookieFallback === null ||
+          cookieFallback === undefined
+        ) {
+          navigate("/login");
+        }
+    
         checkAuthUser();
-    },[])
+      }, []);
     const value = {
         user,
         setUser,

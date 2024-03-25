@@ -1,8 +1,9 @@
 import { v4 } from "uuid";
-import { INewGroup, INewPost, INewUser, IUpdateGroup, IUpdatePost } from "../../../types";
+import { INewBuddy, INewCounsellor, INewGroup, INewPost, INewUser, IUpdateBuddy, IUpdateCounsellor, IUpdateGroup, IUpdatePost, IUpdateUser } from "../../../types";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 import { ID } from "appwrite";
 
+// user creation and login
 export async function createUserAccount(user: INewUser) {
     try {
         const newAccount = await account.create(
@@ -19,6 +20,7 @@ export async function createUserAccount(user: INewUser) {
         const newUser = await saveUserToDB({
             accountid: user.userid,
             role: "student",
+            password: newAccount.password,
             name: newAccount.name,
             email: newAccount.email,
             username: user.username,
@@ -31,10 +33,48 @@ export async function createUserAccount(user: INewUser) {
     }
 }
 
+// export async function updateUserAccount(user: {
+//     userid: string
+// }) {
+//     try {
+//         console.log(user.userid);
+//         const res = await fetch(`http://localhost:3000/updateUser/${user.userid}`);
+//         const data = await res.json();
+//         console.log(data);
+//     } catch (error) {
+//         return error;
+//     }
+// }
+
+export async function UpdateUser(user: IUpdateUser) {
+    try {
+        const updatedCousellor = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            user.$id,
+            {
+                role: user.role,
+                name: user.name,
+                email: user.email,
+                password: user.password,
+                username: user.username,
+                imageUrl: user.imageUrl
+            })
+        if (!updatedCousellor) {
+            await deleteFile(user.imageId);
+            throw Error;
+        }
+        return updatedCousellor
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function saveUserToDB(user: {
     accountid: string;
     role: string,
     email: string,
+    password: string,
     name: string,
     imageUrl: URL,
     username?: string;
@@ -133,7 +173,6 @@ export async function createPost(post: INewPost) {
     }
 }
 
-//official posts 
 export async function uploadFile(file: File) {
     try {
         const uploadFile = await storage.createFile(
@@ -147,7 +186,6 @@ export async function uploadFile(file: File) {
     }
 }
 
-//official posts 
 export async function deleteFile(fileId: string) {
     try {
         await storage.deleteFile(appwriteConfig.officialPostsStorageId, fileId);
@@ -157,7 +195,6 @@ export async function deleteFile(fileId: string) {
     }
 }
 
-//official posts 
 export async function updatePost(post: IUpdatePost) {
     try {
         const hasFileToUpdate = post.file.length > 0;
@@ -209,11 +246,36 @@ export async function updatePost(post: IUpdatePost) {
     }
 }
 
+export async function deletePostById(postId: any) {
+    try {
+        console.log(postId)
+        const postInfo = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.officialPostsCollectionId,
+            postId
+        )
+        console.log(postInfo.imageId)
+        const Gfile = storage.deleteFile(appwriteConfig.officialPostsStorageId, postInfo.imageId);
+        if (!Gfile) throw Error
+
+        const post = await databases.deleteDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.officialPostsCollectionId,
+            postId);
+
+        if (!post) throw Error
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function getRecentPosts() {
     const posts = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.officialPostsCollectionId,
     )
+
     if (!posts) throw Error
     return posts
 }
@@ -265,14 +327,13 @@ export async function createGroup(group: INewGroup) {
             throw Error;
         }
         console.log(fileUrl);
-
+        console.log("reached the create group method")
         //save post to database
         const newGroup = await databases.createDocument(
             appwriteConfig.databaseId,
             appwriteConfig.groupCollectionId,
             v4(),
             {
-
                 name: group.name,
                 bio: group.bio,
                 counsellorId: group.counsellorId,
@@ -291,12 +352,11 @@ export async function createGroup(group: INewGroup) {
     }
 }
 
-//group 
 export async function uploadFileGroupProfile(file: File) {
     try {
         const uploadFile = await storage.createFile(
             appwriteConfig.profileStorageId,
-            ID.unique(),
+            v4(),
             file
         );
         return uploadFile;
@@ -305,7 +365,6 @@ export async function uploadFileGroupProfile(file: File) {
     }
 }
 
-//group 
 export async function deleteFileGroup(fileId: string) {
     try {
         await storage.deleteFile(appwriteConfig.profileStorageId, fileId);
@@ -363,4 +422,368 @@ export async function updateGroup(group: IUpdateGroup) {
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function getRecentGroups() {
+    const groups = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.groupCollectionId,
+    )
+    if (!groups) throw Error
+    return groups
+}
+
+export async function getGroupById(groupId: string) {
+    try {
+        console.log(groupId)
+        const group = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.groupCollectionId,
+            groupId
+        )
+        return group
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function deleteGroupById(groupId: any) {
+    try {
+        console.log(groupId)
+        const groupInfo = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.groupCollectionId,
+            groupId
+        )
+        console.log(groupInfo.imageId)
+        const Gfile = storage.deleteFile(appwriteConfig.profileStorageId, groupInfo.imageId);
+        if (!Gfile) throw Error
+
+        const group = await databases.deleteDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.groupCollectionId,
+            groupId);
+
+        if (!group) throw Error
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//counsellor
+export async function addCounsellor(user: INewCounsellor) {
+    try {
+        console.log("Entered the add counsellor!!")
+        console.log(user)
+        const newAccount = await account.create(
+            user.userId,
+            user.email,
+            user.password,
+            user.name
+        );
+
+        console.log(newAccount)
+        console.log(user)
+        if (!newAccount) throw Error;
+
+        const avatarUrl = avatars.getInitials(user.name);
+        const Cuser = await saveCounsellorToDB({
+            accountid: user.userId,
+            email: newAccount.email,
+            password: user.password,
+            block: user.block,
+            contact: user.contact
+        })
+        console.log(Cuser)
+        const newUser = await saveUserToDB({
+            accountid: user.userId,
+            role: "counsellor",
+            name: user.name,
+            email: user.email,
+            username: user.username,
+            imageUrl: avatarUrl
+        });
+        console.log(newUser)
+        return newUser;
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function saveCounsellorToDB(user: {
+    accountid: string,
+    email: string,
+    password: string,
+    block: string,
+    contact?: string
+}) {
+    try {
+        const newUser = await databases.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.counsellorCollectionId,
+            user.accountid,
+            user
+        )
+        return newUser;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function UpdateCounsellorU(user: IUpdateCounsellor) {
+    try {
+        //save post to database
+        const avatarUrl = avatars.getInitials(user.name);
+        const updatedCousellor = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            user.$id,
+            {
+                role: "counsellor",
+                name: user.name,
+                password: user.password,
+                email: user.email,
+                username: user.username,
+                imageUrl: avatarUrl
+            })
+        if (!updatedCousellor) {
+            await deleteFile(user.imageId);
+            throw Error;
+        }
+        return updatedCousellor
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function UpdateCounsellorC(user: IUpdateCounsellor) {
+    try {
+        //save post to database
+        const updatedCousellor = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.counsellorCollectionId,
+            user.$id,
+            {
+                block: user.block,
+                contact: user.contact,
+                password: user.password,
+                email: user.email,
+                accountid: user.$id
+            })
+        if (!updatedCousellor) {
+            await deleteFile(user.imageId);
+            throw Error;
+        }
+        return updatedCousellor
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//user tb
+export async function getCounsellorByIdU(userId: string) {
+    try {
+        console.log(userId)
+        const counsellor = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            userId
+        )
+        return counsellor
+    } catch (error) {
+        console.log(error)
+    }
+}
+//counsellor tb
+export async function getCounsellorByIdC(userId: string) {
+    try {
+        console.log(userId)
+        const counsellor = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.counsellorCollectionId,
+            userId
+        )
+        return counsellor
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//user tb
+export async function getRecentCounsellorU() {
+    const counsellor = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+    )
+
+    if (!counsellor) throw Error
+    return counsellor
+}
+//counsellor tb
+export async function getRecentCounsellorC() {
+    const counsellor = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.counsellorCollectionId,
+    )
+
+    if (!counsellor) throw Error
+    return counsellor
+}
+
+//buddy
+export async function addBuddy(user: INewBuddy) {
+    try {
+        console.log("Entered the add buddy!!")
+        console.log(user)
+        const newAccount = await account.create(
+            user.userId,
+            user.email,
+            user.password,
+            user.name
+        );
+
+        console.log(newAccount)
+        if (!newAccount) throw Error;
+
+        const avatarUrl = avatars.getInitials(user.name);
+        const Cuser = await saveBuddyToDB({
+            accountid: user.userId,
+            email: newAccount.email,
+            password: user.password,
+            contact: user.contact
+        })
+        console.log(Cuser)
+        const newUser = await saveUserToDB({
+            accountid: user.userId,
+            password: newAccount.password,
+            role: "buddy",
+            name: user.name,
+            email: user.email,
+            username: user.username,
+            imageUrl: avatarUrl
+        });
+        console.log(newUser)
+        return newUser;
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function saveBuddyToDB(user: {
+    accountid: string,
+    email: string,
+    password: string,
+    contact?: string
+}) {
+    try {
+        const newUser = await databases.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.buddyCollectionId,
+            user.accountid,
+            user
+        )
+        return newUser;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function UpdateBuddyU(user: IUpdateBuddy) {
+    try {
+        //save post to database
+        const avatarUrl = avatars.getInitials(user.name);
+        const updatedBuddy = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            user.$id,
+            {
+                role: "buddy",
+                name: user.name,
+                email: user.email,
+                username: user.username,
+                imageUrl: avatarUrl
+            })
+        if (!updatedBuddy) {
+            await deleteFile(user.imageId);
+            throw Error;
+        }
+        return updatedBuddy
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function UpdateBuddyB(user: IUpdateBuddy) {
+    try {
+        //save post to database
+        const updatedBuddy = await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.buddyCollectionId,
+            user.$id,
+            {
+                contact: user.contact,
+                password: user.password,
+                email: user.email,
+                accountid: user.$id
+            })
+        if (!updatedBuddy) {
+            await deleteFile(user.imageId);
+            throw Error;
+        }
+        return updatedBuddy
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function getBuddyByIdU(userId: string) {
+    try {
+        console.log(userId)
+        const buddy = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            userId
+        )
+        return buddy
+    } catch (error) {
+        console.log(error)
+    }
+}
+//buddy tb
+export async function getBuddyByIdB(userId: string) {
+    try {
+        console.log(userId)
+        const buddy = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.buddyCollectionId,
+            userId
+        )
+        return buddy
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//user tb
+export async function getRecentBuddyU() {
+    const buddy = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+    )
+
+    if (!buddy) throw Error
+    return buddy
+}
+
+export async function getRecentBuddyB() {
+    const buddy = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.buddyCollectionId,
+    )
+
+    if (!buddy) throw Error
+    return buddy
 }

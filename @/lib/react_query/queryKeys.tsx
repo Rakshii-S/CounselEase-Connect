@@ -20,5 +20,18 @@ export enum QUERY_KEYS {
 
     //GROUP KEYS
     GET_RECENT_GROUPS = "getRecentGroups",
-    GET_GROUP_BY_ID = "getGroupById"
+    GET_GROUP_BY_ID = "getGroupById",
+
+    //COUNSELLOR KEYS
+    GET_COUNSELLOR_BY_ID_U = "getCounsellorByIdU",
+    GET_COUNSELLOR_BY_ID_C = "getCounsellorByIdC",
+    GET_RECENT_COUNSELLORS_U = "getRecentCounsellorU",
+    GET_RECENT_COUNSELLORS_C= "getRecentCounsellorC",
+
+    //BUDDY KEYS 
+    GET_BUDDY_BY_ID_U = "getBuddyByIdU",
+    GET_BUDDY_BY_ID_B = "getBuddyByIdB",
+    GET_RECENT_BUDDY_U = "getRecentBuddyU",
+    GET_RECENT_BUDDY_B= "getRecentBuddyB"
+
 }

@@ -1,8 +1,15 @@
 import { Button } from '../../../@/components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
+import { useGetRecentGroup } from '../../../@/lib/react_query/queryNmutation';
+import Loader from '../shared/Loader';
+import { Models } from 'appwrite';
+
 
 function Group() {
   const navigate = useNavigate();
+
+  //tanstack query and appwrite 
+  const {data:groups, isPending : isGroupLoading} = useGetRecentGroup();
   return (
     <>
     <div className='common-container'>
@@ -16,20 +23,28 @@ function Group() {
         />
       </Link>
     </div>
-    <div className='bg-gray-900 m-5 w-full h-44 rounded-3xl flex flex-row justify-between'>
-        <div className='p-8 text-xl flex flex-row'>
-            <img
-                src="https://i.pinimg.com/474x/60/b1/e4/60b1e4f0d521cfd16e4de3e59a263470.jpg"
-                alt="group"
-                width={120}
-                className='rounded-full'
-            />
-            <p className='p-10'>Group name</p>
-        </div>
-        <div className='p-10'>
-            <Button onClick={()=>navigate("/view-group")} className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-32 h-20">View</Button>
-        </div>
-    </div>
+    {isGroupLoading && !groups?(
+              <Loader/>
+            ):(<ul className="flex flex-1 flex-col gap-9 w-full">
+                  {groups?.documents.map((group: Models.Document) => (
+                    <div className='bg-gray-900 m-5 w-full h-44 rounded-3xl flex flex-row justify-between'>
+                    <div className='p-8 text-xl flex flex-row'>
+                        <img
+                            src={group.imageUrl || `https://i.pinimg.com/474x/60/b1/e4/60b1e4f0d521cfd16e4de3e59a263470.jpg`}
+                            alt="group"
+                            width={120}
+                            className='rounded-full'
+                        />
+                        <p className='p-10'>{group.name}</p>
+                    </div>
+                    <div className='p-10'>
+                        <Button onClick={()=>navigate(`/view-group/${group.$id}`)} className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-32 h-20">View</Button>
+                    </div>
+                </div>
+                  ))}
+              </ul>
+              )
+    }
     </div>
     </>
   )

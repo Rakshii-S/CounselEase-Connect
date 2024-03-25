@@ -68,7 +68,7 @@ function RightBar()
                         </li>
                         <li className={`leftsidebar-link group`}>
                             <Button
-                            onClick={()=>navigate('/')}
+                            onClick={()=>navigate('/edit-profile')}
                             className="flex gap-4 items-center p-1">
                                 <img 
                                 src="/assets/edit.png"

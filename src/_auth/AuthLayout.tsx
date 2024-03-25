@@ -1,13 +1,14 @@
-import {Outlet, Navigate} from 'react-router-dom';
+import {Navigate, Outlet} from 'react-router-dom';
 import { Toaster } from '../../@/components/ui/toaster';
+import { useUserContext } from '../../context/AuthContext';
+import RootLayout from '../_root/RootLayout';
 
 function AuthLayout() {
-  const isAuthenticated = false;
+  const {user} = useUserContext();
+  console.log(user);
   return (
     <>
-      {isAuthenticated? (
-        <Navigate to="/"/>
-      ):(
+      {user.email == "" ? (
         <>
         <section className='flex flex-1 justify-center items-center flex-col py-10'>
           <Outlet/>
@@ -18,6 +19,10 @@ function AuthLayout() {
         alt="logo"
         className='hidden xl:block h-full w-1/2 object-cover justify-end'
         />
+        </>
+      ):(
+        <>
+        <Navigate to="/"/>
         </>
       )}
     </>

@@ -25,11 +25,15 @@ import LoginForm from './_auth/forms/LoginForm'
 import RegisterForm from './_auth/forms/RegisterForm'
 import EditPost from './_root/admin pages/EditPost'
 import PostDetails from './_root/admin pages/PostDetails'
+import { Toast } from '../@/components/ui/toast'
+import Profile from './_root/admin pages/Profile'
+import EditProfile from './_root/admin pages/EditProfile'
 
 function App() {
 
   return (
     <main className='flex h-screen'>
+      <Toast/>
         <Routes>
           {/*public routes*/}
           <Route element={<AuthLayout/>}>
@@ -41,26 +45,28 @@ function App() {
           <Route element={<RootLayout/>}>
               <Route element={<AdminLayout/>}>
                   <Route index path="/" element={<Home/>}/>
+                  
                   <Route path="/groups" element={<Group/>}/>
-                  <Route path="/view-group" element={<ViewGroup/>}/>
+                  <Route path="/view-group/:id" element={<ViewGroup/>}/>
                   <Route path="/create-group" element={<CreateGroup/>}/>
-                  <Route path="/edit-group" element={<EditGroups/>}/>
+                  <Route path="/edit-group/:id" element={<EditGroups/>}/>
 
                   <Route path="/counsellor" element={<Counsellor/>}/>
-                  <Route path="/view-counsellor" element={<ViewCounsellor/>}/>
+                  <Route path="/view-counsellor/:id" element={<ViewCounsellor/>}/>
                   <Route path="/add-counsellor" element={<AddCounsellors/>}/>
-                  <Route path="/edit-counsellor" element={<EditCounsellor/>}/>
+                  <Route path="/edit-counsellor/:id" element={<EditCounsellor/>}/>
 
                   <Route path="/buddy" element={<Buddy/>}/>
-                  <Route path="/view-buddies" element={<ViewBuddy/>}/>
+                  <Route path="/view-buddy/:id" element={<ViewBuddy/>}/>
                   <Route path="/add-buddy" element={<AddBuddy/>}/>
-                  <Route path="/edit-buddy" element={<EditBuddy/>}/>
+                  <Route path="/edit-buddy/:id" element={<EditBuddy/>}/>
 
                   <Route path="/create-post" element={<CreatePost/>}/>
                   <Route path="/edit-post/:id" element={<EditPost/>}/>
                   <Route path="/post/:id" element={<PostDetails/>}/>
-
                   
+                  <Route path="/profile" element={<Profile/>}/>
+                  <Route path="/edit-profile" element={<EditProfile/>}/>
                 </Route>
           </Route>
         </Routes>

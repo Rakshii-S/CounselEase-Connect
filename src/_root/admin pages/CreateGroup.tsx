@@ -1,6 +1,7 @@
 import GroupForm from './GroupForm'
 
 function CreateGroup() {
+
   return (
     <div  className="common-container">
     <div className="flex h-18">

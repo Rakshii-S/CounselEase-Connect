@@ -24,7 +24,8 @@ export const AddGroupToDB = z.object({
   })
 
 //props
-type GroupForm={
+type GroupForm =
+  {
     group?:Models.Document;
     action:'Create' | 'Update'
   }
@@ -47,8 +48,8 @@ type GroupForm={
       name:"",
       file:[],
       bio:"",
-      counsellorId:"",
-      buddyId:""
+      counsellorId:"buddy",
+      buddyId:"buddy"
     },
   })
  
@@ -67,7 +68,7 @@ type GroupForm={
         {
           toast({title:'Please try again'})
         }
-        return navigate(`/`)
+        return navigate(`/groups`)
     } 
     else
     {
@@ -85,11 +86,11 @@ type GroupForm={
             title:'Group created successfully'
           })
         }
-        return navigate('/');
+        return navigate('/groups');
     }
  }
     return (
-      <div>
+    <div>
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-center">
 
@@ -136,47 +137,21 @@ type GroupForm={
             </FormItem>
           )}
         />
-        
-        <Select onValueChange={group?.onChange} defaultValue={group?.value} name="counsellorId">
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-        </Select>
-
-        <Select onValueChange={group?.onChange} defaultValue={group?.value} name="buddyId">
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-        </Select>
 
        <center>
           <Button type="submit" className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-56 h-18">
             {isLoadingCreate || isLoadingUpdate?(
-              <div className="pl-10 pt-2">
+              <div className="pl-6">
                 <Loader/>
               </div>
             ):(
-              <p>{action} Post</p>
+              <p>{action} Group</p>
             )}
             </Button>
-          <Button type="button" onClick={()=>navigate('/')}  className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-56 h-18">Cancel</Button>
+          <Button type="button" onClick={()=>navigate('/groups')}  className="bg-sky-800 m-2 p-4 mb-10 rounded-xl w-56 h-18">Cancel</Button>
           </center>
       </form>
-    </Form>
+      </Form>
       </div>
     )
   }

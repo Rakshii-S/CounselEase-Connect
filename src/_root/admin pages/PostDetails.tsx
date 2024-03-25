@@ -1,18 +1,23 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import PostLikes from '../shared/PostLikes';
 import { useGetPostById } from '../../../@/lib/react_query/queryNmutation';
 import { useUserContext } from '../../../context/AuthContext';
 import { Loader } from 'lucide-react';
 import { multiFormatDateString } from '../../../@/lib/utils';
 import { Button } from '../../../@/components/ui/button';
+import { deletePostById } from '../../../@/lib/appwrite/api';
 
 function PostDetails() {
     const {id} = useParams()
     const {data: post, isPending} = useGetPostById(id || '');
     const {user} = useUserContext();
-    const handleDeletePost = ()=>{
-  
+    const navigate = useNavigate();
+    function deletePost()
+    {
+      deletePostById(id)
+      navigate('/')
     }
+
     return (
       <div className="post_details-container">
         {isPending?<Loader/>:(
@@ -36,30 +41,26 @@ function PostDetails() {
                       <p className="subtle-semibold lg:small-regular">
                           {multiFormatDateString(post?.$createdAt)}
                       </p>
-                      -
-                      <p className="subtle-semibold lg:smalll-regular">
-                          {post?.location}
-                      </p>
                   </div>
                   </div>
                   </Link>
   
                   <div className="flex-center ">
-                    <Link to={`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && "hidden"}`}>
+                    <Link to={`/edit-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && "hidden"}`}>
                       <img
-                      src="/assets/icons/edit.svg"
+                      src="/assets/edit.png"
                       width={24}
                       height={24}
                       alt="edit"
                       />
                     </Link>
                     <Button
-                    onClick={handleDeletePost}
                     variant="ghost"
-                    className={`ghost_details-delete_btn ${user.id !== post?.creator.$id && "hidden"}`}
+                    className={`ghost_details-delete_btn ml-4 ${user.id !== post?.creator.$id && "hidden"}`}
+                    onClick={deletePost}
                     >
                       <img
-                      src="/assets/icons/delete.svg"
+                      src="/assets/trash.png"
                       alt="delete"
                       width={24}
                       height={24}

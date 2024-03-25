@@ -8,7 +8,9 @@ export const appwriteConfig = {
     profileStorageId: '65f1b4db3070ff8db8e7',
     userCollectionId: '65eebe5416d4027d3511',
     officialPostsCollectionId: '65f1afd8c78ab947dfc6',
-    groupCollectionId: '65fc5a15bb58504703b5'
+    groupCollectionId: '65fc5a15bb58504703b5',
+    counsellorCollectionId: '65ef122d62f6e9366fa9',
+    buddyCollectionId: '65ef1241f38f7e13b72b'
 }
 
 export const client = new Client();

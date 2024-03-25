@@ -11,9 +11,15 @@ export type INavLink = {
     label: string;
 };
 
+//USER SECTION
 export type IUpdateUser = {
+    password: any;
+    $id: any,
     userId: string;
+    email: string;
     name: string;
+    username: string;
+    role: string;
     bio: string;
     imageId: string;
     imageUrl: URL | string;
@@ -49,6 +55,7 @@ export type IUser = {
     bio: string;
 };
 
+
 export type INewUser = {
     userid: string;
     name: string;
@@ -76,4 +83,58 @@ export type IUpdateGroup = {
     name: string;
     file: File[];
     bio?: string;
+}
+
+//COUNSELLOR SECTION
+export type INewCounsellor = {
+    userId: string;
+    role: string;
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    imageUrl: any;
+    block: string;
+    contact: string;
+    bio: string;
+}
+
+export type IUpdateCounsellor = {
+    $id: any;
+    file: File[];
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    imageUrl?: any;
+    imageId?: any,
+    block: string;
+    contact: string;
+    bio: string;
+}
+
+// BUDDY SECTION
+export type INewBuddy = {
+    userId: string;
+    role: string;
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    imageUrl: any;
+    contact: string;
+    bio: string;
+}
+
+export type IUpdateBuddy = {
+    $id: any;
+    file: File[];
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    imageUrl?: any;
+    imageId?: any,
+    contact: string;
+    bio: string;
 }

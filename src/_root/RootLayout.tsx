@@ -1,8 +1,17 @@
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
+import { useUserContext } from "../../context/AuthContext"
 
 function RootLayout() {
+  const {user} = useUserContext()
   return (
-    <Outlet/>
+    <>
+      {user.email == ""?
+      (
+        <Navigate to="/login"/>
+      ):(
+        <Outlet/>
+      )}
+    </>
   )
 }
 
